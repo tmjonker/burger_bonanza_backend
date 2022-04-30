@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MenuRest {
 
     MenuItemRepository menuItemRepository;
@@ -20,7 +19,7 @@ public class MenuRest {
         this.menuItemRepository = menuRepository;
     }
 
-    @GetMapping("/menu")
+    @GetMapping("/api/menu")
     public List<MenuItem> getAllMenuItems() {
 
         return Streamable.of(menuItemRepository.findAll()).toList();

@@ -1,10 +1,6 @@
 package com.tmjonker.burgerbonanza.menu;
 
-import org.springframework.lang.NonNull;
-
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 @Entity
 public class MenuItem {
