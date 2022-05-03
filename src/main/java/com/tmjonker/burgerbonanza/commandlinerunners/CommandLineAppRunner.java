@@ -5,6 +5,7 @@ import com.tmjonker.burgerbonanza.role.RoleRepository;
 import com.tmjonker.burgerbonanza.user.User;
 import com.tmjonker.burgerbonanza.user.UserRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,7 @@ public class CommandLineAppRunner implements CommandLineRunner {
     private PasswordEncoder passwordEncoder;
     private RoleRepository roleRepository;
 
+    @Lazy
     public CommandLineAppRunner(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
 
         this.userRepository = userRepository;

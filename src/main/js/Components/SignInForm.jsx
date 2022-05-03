@@ -3,7 +3,7 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
-import postMenuItem from "../http.js";
+import signIn from "../http.js";
 import PageHeader from "./PageHeader.jsx";
 
 function SignInForm() {
@@ -15,6 +15,15 @@ function SignInForm() {
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
+
+  function handleSubmit() {
+    signIn(values);
+    setValues({
+      ...values,
+      username: "",
+      password: "",
+    });
+  }
 
   return (
     <div>
@@ -30,61 +39,53 @@ function SignInForm() {
           elevation={3}
           sx={{ marginY: 3, height: 300, width: 400, alignItems: "center" }}
         >
-          <Grid
-            container
-            spacing={0}
-            direction="row"
-            alignItems="center"
-            justifyContent="center"
-            sx={{
-              marginTop: 3,
-            }}
-          >
-            <TextField
-              id="username-field"
-              label="Username"
-              variant="outlined"
-              type="text"
-              autoComplete="username"
-              value={values.username}
-              onChange={handleChange("username")}
-              sx={{ marginX: 1, marginTop: 3 }}
-            />
-            <TextField
-              id="password-field"
-              label="Password"
-              variant="outlined"
-              type="password"
-              autoComplete="current-password"
-              value={values.password}
-              onChange={handleChange("password")}
-              sx={{ marginX: 1, my: 3 }}
-            />
-          </Grid>
-          <Grid
-            container
-            spacing={0}
-            direction="row"
-            alignItems="center"
-            justifyContent="center"
-            sx={{
-              marginTop: 3,
-            }}
-          >
-            <Button
-              variant="contained"
-              onClick={() => {
-                postMenuItem(values);
-                setValues({
-                  ...values,
-                  id: 0,
-                  name: "",
-                });
+          <form onSubmit={handleSubmit}>
+            <Grid
+              container
+              spacing={0}
+              direction="row"
+              alignItems="center"
+              justifyContent="center"
+              sx={{
+                marginTop: 3,
               }}
             >
-              Submit
-            </Button>
-          </Grid>
+              <TextField
+                id="username-field"
+                label="Username"
+                variant="outlined"
+                type="text"
+                autoComplete="username"
+                value={values.username}
+                onChange={handleChange("username")}
+                sx={{ marginX: 1, marginTop: 3 }}
+              />
+              <TextField
+                id="password-field"
+                label="Password"
+                variant="outlined"
+                type="password"
+                autoComplete="current-password"
+                value={values.password}
+                onChange={handleChange("password")}
+                sx={{ marginX: 1, my: 3 }}
+              />
+            </Grid>
+            <Grid
+              container
+              spacing={0}
+              direction="row"
+              alignItems="center"
+              justifyContent="center"
+              sx={{
+                marginTop: 3,
+              }}
+            >
+              <Button variant="contained" type="submit">
+                Submit
+              </Button>
+            </Grid>
+          </form>
         </Paper>
       </Grid>
     </div>

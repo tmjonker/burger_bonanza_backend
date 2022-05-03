@@ -53,7 +53,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const NavBar = () => {
-  const pages = ["Menu", "Order Now", "Contact Us"];
+  const pages = ["Sign-in", "Menu", "Order Now", "Contact Us"];
 
   return (
     <AppBar position="static">
@@ -86,6 +86,8 @@ const NavBar = () => {
                     ? "order"
                     : page === "Contact Us"
                     ? "contact"
+                    : page === "Sign-in"
+                    ? "sign-in"
                     : null
                 }
                 style={{ textDecoration: "none" }}
