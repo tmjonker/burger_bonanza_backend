@@ -3,10 +3,23 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
-import signIn from "../http.js";
 import PageHeader from "./PageHeader.jsx";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
+import $ from 'jquery';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#C41E3A",
+    },
+  },
+});
 
 function SignInForm() {
+
+  const navigate = useNavigate();
+
   const [values, setValues] = React.useState({
     username: "",
     password: "",
@@ -16,8 +29,13 @@ function SignInForm() {
     setValues({ ...values, [prop]: event.target.value });
   };
 
-  function handleSubmit() {
+  // function that processes submit, calls method that sends POST request, and resets values to blank.
+  function handleSubmit(event) {
+
+    event.preventDefault();
+
     signIn(values);
+
     setValues({
       ...values,
       username: "",
@@ -25,9 +43,37 @@ function SignInForm() {
     });
   }
 
+  function signIn(values) {
+
+    const credentials = {
+        username: values.username,
+        password: values.password
+    }
+  
+    // POST request to authenticate login information.  Token is returned by server and stored in localStorage.
+    $.ajax({
+        type: 'post',
+        url: 'http://localhost:8080/authenticate',
+        data: JSON.stringify(credentials),
+        contentType: "application/json; charset=utf-8",
+        traditional: true,
+        
+        success: function(data) {
+            let tokenString = JSON.stringify(data);
+            let token = JSON.stringify({token: "Bearer " + JSON.parse(tokenString).token, username: credentials.username, password: credentials.password});
+            localStorage.setItem(credentials.username, token);
+
+            let user = JSON.parse(token);
+
+            console.log(user.token);
+      
+            navigate("/add", {state: user.token});
+        }
+    })
+  }
+
   return (
     <div>
-      <PageHeader message="Sign-in" />
       <Grid
         container
         spacing={0}
@@ -37,8 +83,9 @@ function SignInForm() {
       >
         <Paper
           elevation={3}
-          sx={{ marginY: 3, height: 300, width: 400, alignItems: "center" }}
+          sx={{ marginTop: 10, marginBottom: 16, height: 420, width: 400, alignItems: "center", opacity: 0.9 }}
         >
+          <PageHeader message="Sign-in" />
           <form onSubmit={handleSubmit}>
             <Grid
               container
@@ -81,9 +128,11 @@ function SignInForm() {
                 marginTop: 3,
               }}
             >
-              <Button variant="contained" type="submit">
-                Submit
-              </Button>
+              <ThemeProvider theme={theme}>
+                <Button variant="contained" type="submit">
+                  Submit
+                </Button>
+              </ThemeProvider>
             </Grid>
           </form>
         </Paper>
