@@ -24,11 +24,10 @@ function AddForm(props) {
   const location = useLocation();
   let token;
   if (location.state !== null) {
-    console.log(location.state);
+  
     token = location.state; // Token that is passed over from sign-in.
   } else {
     token = props.token;
-    console.log(props.token);
   }
 
   const [values, setValues] = React.useState({

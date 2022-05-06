@@ -22,7 +22,6 @@ const theme = createTheme({
 });
 
 const NavBar = () => {
-
   const navigate = useNavigate();
 
   const user = localStorage.getItem("user");
@@ -44,15 +43,18 @@ const NavBar = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  function handleMenuItemClick() {
+    setAnchorEl(null);
 
     if (user !== null) {
-
       localStorage.clear();
       navigate("/");
     } else {
       navigate("/sign-in");
     }
-  };
+  }
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -91,7 +93,7 @@ const NavBar = () => {
                   <MenuIcon />
                 </IconButton>
                 <Menu
-                  disableScrollLock="true"
+                  disableScrollLock={true}
                   id="menu-appbar"
                   anchorEl={anchorElNav}
                   anchorOrigin={{
@@ -189,7 +191,7 @@ const NavBar = () => {
                   <AccountCircle />
                 </IconButton>
                 <Menu
-                  disableScrollLock="true"
+                  disableScrollLock={true}
                   id="menu-appbar"
                   anchorEl={anchorEl}
                   anchorOrigin={{
@@ -204,10 +206,8 @@ const NavBar = () => {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  <MenuItem onClick={handleClose}>
-                    {user !== null
-                      ? "Sign-out"
-                      : "Sign-in"}
+                  <MenuItem onClick={handleMenuItemClick}>
+                    {user !== null ? "Sign-out" : "Sign-in"}
                   </MenuItem>
                 </Menu>
               </div>
