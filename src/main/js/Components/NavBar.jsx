@@ -26,7 +26,7 @@ const NavBar = () => {
 
   const user = localStorage.getItem("user");
 
-  const pages = ["Sign-in", "Order Now", "Contact Us"];
+  const pages = ["Menu", "Contact Us"];
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -37,6 +37,8 @@ const NavBar = () => {
     setAnchorElNav(null);
   };
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -45,7 +47,7 @@ const NavBar = () => {
     setAnchorEl(null);
   };
 
-  function handleMenuItemClick() {
+  function handleSignInOutClick() {
     setAnchorEl(null);
 
     if (user !== null) {
@@ -56,7 +58,14 @@ const NavBar = () => {
     }
   }
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  function handleMenuItemClick() {
+    setAnchorEl(null);
+
+    const userString = localStorage.getItem("user");
+    const user = JSON.parse(userString);
+
+    navigate("/add", {state: user.token});
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -117,13 +126,9 @@ const NavBar = () => {
                         key={page}
                         to={
                           page === "Menu"
-                            ? "add"
-                            : page === "Order Now"
-                            ? "order"
+                            ? "menu"
                             : page === "Contact Us"
                             ? "contact"
-                            : page === "Sign-in"
-                            ? "sign-in"
                             : null
                         }
                         style={{ color: "black", textDecoration: "none" }}
@@ -160,12 +165,10 @@ const NavBar = () => {
                   <Link
                     key={page}
                     to={
-                      page === "Order Now"
-                        ? "order"
+                      page === "Menu"
+                        ? "menu"
                         : page === "Contact Us"
                         ? "contact"
-                        : page === "Sign-in"
-                        ? "sign-in"
                         : null
                     }
                     style={{ textDecoration: "none" }}
@@ -206,7 +209,13 @@ const NavBar = () => {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  <MenuItem onClick={handleMenuItemClick}>
+                  {user !== null ? (
+                    <MenuItem onClick={handleMenuItemClick}>
+                      {user !== null ? "Add Menu Item" : null}
+                    </MenuItem>
+                  ) : null}
+
+                  <MenuItem onClick={handleSignInOutClick}>
                     {user !== null ? "Sign-out" : "Sign-in"}
                   </MenuItem>
                 </Menu>
