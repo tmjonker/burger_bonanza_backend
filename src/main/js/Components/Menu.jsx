@@ -44,7 +44,7 @@ function Menu() {
     <Container maxWidth="xl">
       <Paper elevation={3}
       sx={{
-          marginTop: 4,
+          marginTop: 2,
           opacity: 0.9
       }}>
         <Grid container spacing={1}>
