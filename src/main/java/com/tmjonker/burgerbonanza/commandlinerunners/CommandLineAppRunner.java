@@ -26,9 +26,9 @@ public class CommandLineAppRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
-        if (!userRepository.existsByUsername("tmjonker1")) {
-            User user = new User("tmjonker1", passwordEncoder.encode("password"));
+        // create default admin account with a default password that can be changed later.
+        if (!userRepository.existsByUsername("admin")) {
+            User user = new User("admin", passwordEncoder.encode("password"));
             Role role = new Role("Admin");
 
             roleRepository.save(role);
