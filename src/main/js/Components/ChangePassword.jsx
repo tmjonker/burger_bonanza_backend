@@ -61,9 +61,14 @@ function ChangePassword(props) {
       contentType: "application/json; charset=utf-8",
       traditional: true,
       success: function (user) {
-        alert("Password successfully changed...");
-
-        navigate("/");
+          user = JSON.stringify(user);
+          user = JSON.parse(user);
+          if (user.username !== undefined) {
+              alert("Password successfully changed...");
+              navigate("/");
+          } else {
+              alert("Password was incorrect");
+          }
       },
     });
   }

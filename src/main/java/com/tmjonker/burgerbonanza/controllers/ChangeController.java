@@ -25,7 +25,12 @@ public class ChangeController {
 
         String username = (String) payload.get("username");
         String newPassword = (String) payload.get("newPassword");
+        String oldPassword = (String) payload.get("oldPassword");
 
-        return passwordManagementService.changePassword(username, newPassword);
+        if (passwordManagementService.validatePassword(username, oldPassword))
+            return passwordManagementService.changePassword(username, newPassword);
+        else {
+            return null;
+        }
     }
 }

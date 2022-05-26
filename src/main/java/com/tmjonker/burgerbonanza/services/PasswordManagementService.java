@@ -24,4 +24,11 @@ public class PasswordManagementService {
         user.setPassword(passwordEncoder.encode(newPassword));
         return userRepository.save(user);
     }
+
+    public boolean validatePassword(String username, String oldPassword) {
+
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
+
+        return passwordEncoder.matches(oldPassword, user.getPassword());
+    }
 }
