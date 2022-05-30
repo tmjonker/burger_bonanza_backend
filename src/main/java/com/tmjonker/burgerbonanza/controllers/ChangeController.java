@@ -1,5 +1,7 @@
 package com.tmjonker.burgerbonanza.controllers;
 
+import com.tmjonker.burgerbonanza.ChangePasswordRequest.ChangePasswordRequest;
+import com.tmjonker.burgerbonanza.services.AuthenticationService;
 import com.tmjonker.burgerbonanza.services.PasswordManagementService;
 import com.tmjonker.burgerbonanza.user.User;
 import com.tmjonker.burgerbonanza.user.UserRepository;
@@ -14,23 +16,25 @@ public class ChangeController {
 
     UserRepository userRepository;
     PasswordManagementService passwordManagementService;
+    AuthenticationService authenticationService;
 
-    public ChangeController(UserRepository userRepository, PasswordManagementService passwordManagementService) {
+    public ChangeController(UserRepository userRepository, PasswordManagementService passwordManagementService,
+                            AuthenticationService authenticationService) {
         this.userRepository = userRepository;
         this.passwordManagementService = passwordManagementService;
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping("/change")
-    public User postChange(@RequestBody Map<String, Object> payload) {
+    public User postChange(@RequestBody ChangePasswordRequest cpr) throws Exception {
 
-        String username = (String) payload.get("username");
-        String newPassword = (String) payload.get("newPassword");
-        String oldPassword = (String) payload.get("oldPassword");
+        String username = cpr.getUsername();
+        String newPassword = cpr.getNewPassword();
+        String oldPassword = cpr.getOldPassword();
 
-        if (passwordManagementService.validatePassword(username, oldPassword))
-            return passwordManagementService.changePassword(username, newPassword);
-        else {
-            return null;
-        }
+        authenticationService.authenticate(username, oldPassword);
+
+        return passwordManagementService.changePassword(username, newPassword);
+
     }
 }
