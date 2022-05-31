@@ -44,10 +44,7 @@ public class MenuController {
     }
 
     @PostMapping(value = "/api/menu/{id}")
-    public MenuItem addMenuItem(@RequestBody Map<String, Object> payload, Integer id) {
-
-        MenuItem menuItem = new MenuItem(Integer.parseInt((String)payload.get("id")), (String) payload.get("category"), (String) payload.get("name"),
-                (String) payload.get("description"), Double.parseDouble((String)payload.get("price")), (String) payload.get("imgPath"));
+    public MenuItem addMenuItem(@RequestBody MenuItem menuItem) {
 
         return menuItemRepository.save(menuItem);
     }

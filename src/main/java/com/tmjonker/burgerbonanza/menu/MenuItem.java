@@ -22,19 +22,19 @@ public class MenuItem {
     private double price;
 
     @Column(nullable = false)
-    private String imagePath;
+    private String imgPath;
 
     public MenuItem() {
     }
 
-    public MenuItem(Integer id, String category, String name, String description, double price, String imagePath) {
+    public MenuItem(Integer id, String category, String name, String description, double price, String imgPath) {
 
         this.id = id;
         this.category = category;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.imagePath = imagePath;
+        this.imgPath = imgPath;
     }
 
     public Integer getId() {
@@ -77,12 +77,12 @@ public class MenuItem {
         this.price = price;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public String getImgPath() {
+        return imgPath;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setImgPath(String imagePath) {
+        this.imgPath = imagePath;
     }
 
     @Override
@@ -93,7 +93,7 @@ public class MenuItem {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", imagePath='" + imagePath + '\'' +
+                ", imgPath='" + imgPath + '\'' +
                 '}';
     }
 }
