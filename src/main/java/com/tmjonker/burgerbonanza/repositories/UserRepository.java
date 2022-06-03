@@ -1,5 +1,6 @@
-package com.tmjonker.burgerbonanza.user;
+package com.tmjonker.burgerbonanza.repositories;
 
+import com.tmjonker.burgerbonanza.entities.user.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

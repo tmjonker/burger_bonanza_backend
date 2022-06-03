@@ -1,6 +1,6 @@
-package com.tmjonker.burgerbonanza.user;
+package com.tmjonker.burgerbonanza.entities.user;
 
-import com.tmjonker.burgerbonanza.role.Role;
+import com.tmjonker.burgerbonanza.entities.role.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

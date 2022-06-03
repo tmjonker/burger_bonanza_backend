@@ -1,8 +1,8 @@
 package com.tmjonker.burgerbonanza.services;
 
 import com.tmjonker.burgerbonanza.exceptions.UserNotFoundException;
-import com.tmjonker.burgerbonanza.user.User;
-import com.tmjonker.burgerbonanza.user.UserRepository;
+import com.tmjonker.burgerbonanza.entities.user.User;
+import com.tmjonker.burgerbonanza.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

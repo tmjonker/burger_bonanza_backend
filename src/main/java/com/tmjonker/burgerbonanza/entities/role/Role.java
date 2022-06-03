@@ -1,4 +1,4 @@
-package com.tmjonker.burgerbonanza.role;
+package com.tmjonker.burgerbonanza.entities.role;
 
 import javax.persistence.*;
 

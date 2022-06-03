@@ -1,9 +1,9 @@
 package com.tmjonker.burgerbonanza.commandlinerunners;
 
-import com.tmjonker.burgerbonanza.role.Role;
-import com.tmjonker.burgerbonanza.role.RoleRepository;
-import com.tmjonker.burgerbonanza.user.User;
-import com.tmjonker.burgerbonanza.user.UserRepository;
+import com.tmjonker.burgerbonanza.entities.role.Role;
+import com.tmjonker.burgerbonanza.repositories.RoleRepository;
+import com.tmjonker.burgerbonanza.entities.user.User;
+import com.tmjonker.burgerbonanza.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;

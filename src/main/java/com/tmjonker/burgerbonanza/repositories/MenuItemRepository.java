@@ -1,5 +1,6 @@
-package com.tmjonker.burgerbonanza.menu;
+package com.tmjonker.burgerbonanza.repositories;
 
+import com.tmjonker.burgerbonanza.entities.menu.MenuItem;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

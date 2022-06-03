@@ -1,4 +1,4 @@
-package com.tmjonker.burgerbonanza.menu;
+package com.tmjonker.burgerbonanza.entities.menu;
 
 import javax.persistence.*;
 

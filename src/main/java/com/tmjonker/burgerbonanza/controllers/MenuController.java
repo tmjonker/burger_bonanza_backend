@@ -1,13 +1,12 @@
 package com.tmjonker.burgerbonanza.controllers;
 
 import com.tmjonker.burgerbonanza.exceptions.MenuItemNotFoundException;
-import com.tmjonker.burgerbonanza.menu.MenuItem;
-import com.tmjonker.burgerbonanza.menu.MenuItemRepository;
+import com.tmjonker.burgerbonanza.entities.menu.MenuItem;
+import com.tmjonker.burgerbonanza.repositories.MenuItemRepository;
 import org.springframework.data.util.Streamable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class MenuController {
