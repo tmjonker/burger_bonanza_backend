@@ -31,7 +31,7 @@ function Menu() {
         name={menu.name}
         price={menu.price}
         description={menu.description}
-        img={menu.imagePath}
+        img={menu.imgPath}
         category={menu.category}
       />
     );
