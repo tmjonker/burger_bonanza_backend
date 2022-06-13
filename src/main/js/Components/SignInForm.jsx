@@ -51,7 +51,7 @@ function SignInForm() {
     // POST request to authenticate login information.  Token is returned by server and stored in localStorage.
     $.ajax({
       type: "post",
-      url: "http://localhost:8080/authenticate",
+      url: "http://localhost:8081/authenticate",
       data: JSON.stringify(credentials),
       contentType: "application/json; charset=utf-8",
       traditional: true,
