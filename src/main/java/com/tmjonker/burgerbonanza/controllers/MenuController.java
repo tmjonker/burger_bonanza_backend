@@ -1,9 +1,7 @@
 package com.tmjonker.burgerbonanza.controllers;
 
-import com.tmjonker.burgerbonanza.exceptions.MenuItemNotFoundException;
 import com.tmjonker.burgerbonanza.entities.menu.MenuItem;
-import com.tmjonker.burgerbonanza.repositories.MenuItemRepository;
-import org.springframework.data.util.Streamable;
+import com.tmjonker.burgerbonanza.services.MenuService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,46 +9,46 @@ import java.util.List;
 @RestController
 public class MenuController {
 
-    MenuItemRepository menuItemRepository;
+    MenuService menuService;
 
-    public MenuController(MenuItemRepository menuRepository) {
+    public MenuController(MenuService menuService) {
 
-        this.menuItemRepository = menuRepository;
+        this.menuService = menuService;
     }
 
     @GetMapping("/api/menu")
     public List<MenuItem> getAllMenuItems() {
 
-        return Streamable.of(menuItemRepository.findAll()).toList();
+        return menuService.getAllMenuItems();
     }
 
     @GetMapping("/api/menu/name/{name}")
     public MenuItem getMenuItemByName(@PathVariable String name) {
 
-        return menuItemRepository.findByName(name).orElseThrow(() -> new MenuItemNotFoundException(name));
+        return menuService.getMenuItemByName(name);
     }
 
     @GetMapping("/api/menu/id/{id}")
-    public MenuItem getMenuItemByName(@PathVariable Integer id) {
+    public MenuItem getMenuItemById(@PathVariable Integer id) {
 
-        return menuItemRepository.findById(id).orElseThrow(() -> new MenuItemNotFoundException(id));
+        return menuService.getMenuItemById(id);
     }
 
     @GetMapping("/api/menu/category/{category}")
     public List<MenuItem> getMenuItemsByCategory(@PathVariable String category) {
 
-        return menuItemRepository.findAllByCategory(category).orElseThrow(() -> new MenuItemNotFoundException(category));
+        return menuService.getMenuItemsByCategory(category);
     }
 
     @PostMapping(value = "/api/menu/{id}")
     public MenuItem addMenuItem(@RequestBody MenuItem menuItem) {
 
-        return menuItemRepository.save(menuItem);
+        return menuService.addMenuItem(menuItem);
     }
 
     @DeleteMapping("/menu/{id}")
     public void deleteMenuItem(@PathVariable Integer id) {
 
-        menuItemRepository.deleteById(id);
+        menuService.deleteMenuItem(id);
     }
 }
