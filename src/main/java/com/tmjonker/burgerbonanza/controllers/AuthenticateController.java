@@ -1,5 +1,6 @@
 package com.tmjonker.burgerbonanza.controllers;
 
+import com.tmjonker.burgerbonanza.entities.user.User;
 import com.tmjonker.burgerbonanza.jwt.JwtRequest;
 import com.tmjonker.burgerbonanza.jwt.JwtResponse;
 import com.tmjonker.burgerbonanza.jwt.JwtTokenUtil;
@@ -13,6 +14,8 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 @RestController
@@ -41,6 +44,6 @@ public class AuthenticateController {
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(new JwtResponse(token));
+        return ResponseEntity.ok(Map.of("token", new JwtResponse(token), "user", (User) userDetails));
     }
 }

@@ -10,7 +10,7 @@ import ChangePassword from "./ChangePassword.jsx";
 import Contact from "./Contact.jsx";
 import $ from "jquery";
 import Cart from "./Cart.jsx";
-
+import Register from "./Register.jsx";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -22,17 +22,9 @@ function App() {
         menuItems : [],
     });
 
-    // useEffect(() => {
-    //   if (localStorage.getItem("cart") !== null) {
+    useEffect(() => {
 
-    //     console.log(localStorage.getItem("quantity"));
-
-    //     setQuantity(localStorage.getItem("quantity"));
-    //     setCart(localStorage.getItem("cart"));
-
-    //     console.log(cart.menuItems);
-    //   }
-    // });
+    });
 
     function addToCart(item) {
 
@@ -69,6 +61,7 @@ function App() {
                     <Route exact path="change" element={<ChangePassword />} />
                     <Route exact path="contact" element={<Contact />} />
                     <Route exact path="cart" element={<Cart data={cart.menuItems} remove={removeFromCart} />} />
+                    <Route exact path="register" element={<Register />} />
                 </Routes>
             </Container>
             <Footer />

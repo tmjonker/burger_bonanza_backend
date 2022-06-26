@@ -31,4 +31,9 @@ public class PasswordManagementService {
 
         return passwordEncoder.matches(oldPassword, user.getPassword());
     }
+
+    public String encodePassword(String password) {
+
+        return passwordEncoder.encode(password);
+    }
 }
