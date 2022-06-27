@@ -3,7 +3,6 @@ package com.tmjonker.burgerbonanza.services;
 import com.tmjonker.burgerbonanza.entities.user.User;
 import com.tmjonker.burgerbonanza.exceptions.UsernameAlreadyExistsException;
 import com.tmjonker.burgerbonanza.repositories.UserRepository;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,7 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("username"));
     }
 
-    public User saveUser(Map<String, String> userMap) throws UsernameAlreadyExistsException {
+    public User saveNewUser(Map<String, String> userMap) throws UsernameAlreadyExistsException {
 
         if (!userRepository.existsByUsername(userMap.get("username"))) {
             User user = new User(userMap.get("username"), passwordManagementService.encodePassword(userMap.get("password1")));
@@ -38,5 +37,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         } else {
             throw new UsernameAlreadyExistsException(userMap.get("username"));
         }
+    }
+
+    public User saveUser(User user) {
+
+        return userRepository.save(user);
     }
 }

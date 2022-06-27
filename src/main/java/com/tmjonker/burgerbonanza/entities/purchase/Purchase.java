@@ -22,6 +22,11 @@ public class Purchase {
 
     private double totalPrice;
 
+    public Purchase(List<MenuItem> menuItems, double totalPrice) {
+        this.menuItems = menuItems;
+        this.totalPrice = totalPrice;
+    }
+
     public Long getId() {
         return id;
     }

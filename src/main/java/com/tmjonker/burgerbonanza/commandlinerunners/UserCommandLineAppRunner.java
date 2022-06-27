@@ -10,14 +10,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CommandLineAppRunner implements CommandLineRunner {
+public class UserCommandLineAppRunner implements CommandLineRunner {
 
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private RoleRepository roleRepository;
 
     @Lazy
-    public CommandLineAppRunner(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+    public UserCommandLineAppRunner(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
 
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;

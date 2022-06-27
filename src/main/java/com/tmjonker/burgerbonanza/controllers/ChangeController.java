@@ -1,6 +1,6 @@
 package com.tmjonker.burgerbonanza.controllers;
 
-import com.tmjonker.burgerbonanza.ChangePasswordRequest.ChangePasswordRequest;
+import com.tmjonker.burgerbonanza.entities.user.ChangePasswordRequest.ChangePasswordRequest;
 import com.tmjonker.burgerbonanza.services.AuthenticationService;
 import com.tmjonker.burgerbonanza.services.PasswordManagementService;
 import com.tmjonker.burgerbonanza.entities.user.User;

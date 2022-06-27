@@ -1,4 +1,4 @@
-package com.tmjonker.burgerbonanza.ChangePasswordRequest;
+package com.tmjonker.burgerbonanza.entities.user.ChangePasswordRequest;
 
 import java.io.Serializable;
 
