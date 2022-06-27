@@ -1,12 +1,16 @@
 package com.tmjonker.burgerbonanza.entities.user;
 
+import com.tmjonker.burgerbonanza.entities.address.Address;
+import com.tmjonker.burgerbonanza.entities.purchase.Purchase;
 import com.tmjonker.burgerbonanza.entities.role.Role;
+import com.tmjonker.burgerbonanza.entities.shoppingcart.ShoppingCart;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,11 +35,57 @@ public class User implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
+    @OneToMany
+    @JoinTable(
+            name = "user_purchases",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "purchase_id")
+    )
+    private List<Purchase> purchases;
+
+    @OneToMany
+    @JoinTable(
+            name = "user_addresses",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id")
+    )
+    private Set<Address> addresses;
+
+    @OneToOne
+    @JoinColumn(name = "shopping_cart_id", referencedColumnName = "id")
+    private ShoppingCart shoppingCart;
+
     public User() {}
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }
+
+    public void addAddress(Address address) {
+
+        addresses.add(address);
+    }
+
+    public Set<Address> getAddresses() {
+        return addresses;
+    }
+
+    public List<Purchase> getPurchases() {
+        return purchases;
+    }
+
+    public void addPurchase(Purchase purchase) {
+
+        purchases.add(purchase);
     }
 
     public void addRole(Role role) {

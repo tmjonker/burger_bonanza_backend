@@ -1,6 +1,7 @@
 package com.tmjonker.burgerbonanza.entities.shoppingcart;
 
 import com.tmjonker.burgerbonanza.entities.menu.MenuItem;
+import com.tmjonker.burgerbonanza.entities.user.User;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,7 +11,7 @@ public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private int id;
+    private Long id;
 
     @Column(name = "num_items", nullable = false)
     private int numItems;
@@ -23,11 +24,44 @@ public class ShoppingCart {
     )
     private List<MenuItem> menuItems;
 
-    public int getId() {
+    @OneToOne(mappedBy = "shoppingCart")
+    private User user;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getNumItems() {
+        return numItems;
+    }
+
+    public List<MenuItem> getMenuItems() {
+        return menuItems;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setNumItems(int numItems) {
+        this.numItems = numItems;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void addMenuItem(MenuItem menuItem) {
+
+        menuItems.add(menuItem);
+    }
+
+    public void addMenuItems(List<MenuItem> menuItems) {
+
+        this.menuItems.addAll(menuItems);
     }
 }
