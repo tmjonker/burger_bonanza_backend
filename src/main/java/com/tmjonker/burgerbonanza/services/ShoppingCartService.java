@@ -1,9 +1,13 @@
 package com.tmjonker.burgerbonanza.services;
 
+import com.tmjonker.burgerbonanza.entities.menu.MenuItem;
 import com.tmjonker.burgerbonanza.entities.shoppingcart.ShoppingCart;
+import com.tmjonker.burgerbonanza.entities.shoppingcart.shoppingcartrequest.ShoppingCartRequest;
 import com.tmjonker.burgerbonanza.entities.user.User;
 import com.tmjonker.burgerbonanza.repositories.ShoppingCartRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ShoppingCartService {
@@ -24,9 +28,9 @@ public class ShoppingCartService {
         return user.getShoppingCart();
     }
 
-    public void processShoppingCart(ShoppingCart shoppingCart, String username) {
+    public void processShoppingCart(ShoppingCartRequest shoppingCartRequest, String username) {
 
-        ShoppingCart cart = new ShoppingCart(shoppingCart.getNumItems(), shoppingCart.getMenuItems());
+        ShoppingCart cart = new ShoppingCart(shoppingCartRequest.getNumItems(), shoppingCartRequest.getMenuItems());
         User user = (User) userDetailsService.loadUserByUsername(username);
         cart = shoppingCartRepository.save(cart);
         user.setShoppingCart(cart);

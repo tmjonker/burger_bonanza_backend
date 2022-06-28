@@ -1,6 +1,7 @@
 package com.tmjonker.burgerbonanza.controllers;
 
 import com.tmjonker.burgerbonanza.entities.shoppingcart.ShoppingCart;
+import com.tmjonker.burgerbonanza.entities.shoppingcart.shoppingcartrequest.ShoppingCartRequest;
 import com.tmjonker.burgerbonanza.services.ShoppingCartService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +16,9 @@ public class CartController {
     }
 
     @PostMapping("/cart/{username}")
-    public void postCart(@RequestBody ShoppingCart shoppingCart, @PathVariable String username) {
+    public void postCart(@RequestBody ShoppingCartRequest shoppingCartRequest, @PathVariable String username) {
 
-        shoppingCartService.processShoppingCart(shoppingCart, username);
+        shoppingCartService.processShoppingCart(shoppingCartRequest, username);
     }
 
     @GetMapping("/cart/{username}")

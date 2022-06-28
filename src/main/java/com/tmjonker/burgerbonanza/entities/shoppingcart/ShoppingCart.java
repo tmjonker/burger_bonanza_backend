@@ -16,7 +16,7 @@ public class ShoppingCart {
     @Column(name = "num_items", nullable = false)
     private int numItems;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "cart_items",
             joinColumns = @JoinColumn(name = "cart_id"),
