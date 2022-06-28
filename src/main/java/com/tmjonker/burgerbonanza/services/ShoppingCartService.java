@@ -1,6 +1,7 @@
 package com.tmjonker.burgerbonanza.services;
 
 import com.tmjonker.burgerbonanza.entities.shoppingcart.ShoppingCart;
+import com.tmjonker.burgerbonanza.entities.user.User;
 import com.tmjonker.burgerbonanza.repositories.ShoppingCartRepository;
 import org.springframework.stereotype.Service;
 
@@ -8,14 +9,28 @@ import org.springframework.stereotype.Service;
 public class ShoppingCartService {
 
     ShoppingCartRepository shoppingCartRepository;
+    CustomUserDetailsService userDetailsService;
 
-    public ShoppingCartService(ShoppingCartRepository shoppingCartRepository) {
+    public ShoppingCartService(ShoppingCartRepository shoppingCartRepository, CustomUserDetailsService userDetailsService) {
 
         this.shoppingCartRepository = shoppingCartRepository;
+        this.userDetailsService = userDetailsService;
     }
 
-    public ShoppingCart getShoppingCart(int id) {
+    public ShoppingCart getShoppingCart(String username) {
 
-        return shoppingCartRepository.findById(id).orElseThrow(() -> new RuntimeException("id not found"));
+        User user = (User) userDetailsService.loadUserByUsername(username);
+
+        return user.getShoppingCart();
+    }
+
+    public void processShoppingCart(ShoppingCart shoppingCart, String username) {
+
+        ShoppingCart cart = new ShoppingCart(shoppingCart.getNumItems(), shoppingCart.getMenuItems());
+        User user = (User) userDetailsService.loadUserByUsername(username);
+        cart = shoppingCartRepository.save(cart);
+        user.setShoppingCart(cart);
+
+        userDetailsService.saveUser(user);
     }
 }

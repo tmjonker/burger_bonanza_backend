@@ -27,6 +27,15 @@ public class ShoppingCart {
     @OneToOne(mappedBy = "shoppingCart")
     private User user;
 
+    public ShoppingCart(int numItems, List<MenuItem> menuItems) {
+        this.numItems = numItems;
+        this.menuItems = menuItems;
+    }
+
+    public ShoppingCart() {
+
+    }
+
     public Long getId() {
         return id;
     }

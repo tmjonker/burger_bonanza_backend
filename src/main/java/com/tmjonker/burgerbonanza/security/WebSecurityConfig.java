@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/*.html", "/images/**", "/css/*"
                         , "/built/bundle.js"
-                        , "/authenticate", "/contact", "/cart", "/cart/**", "/register")
+                        , "/authenticate", "/contact", "/register")
                 .permitAll()
                 .antMatchers(HttpMethod.GET, "/api/menu/**", "/api/menu")
                 .permitAll()
