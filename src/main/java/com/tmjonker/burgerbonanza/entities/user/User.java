@@ -1,5 +1,6 @@
 package com.tmjonker.burgerbonanza.entities.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tmjonker.burgerbonanza.entities.address.Address;
 import com.tmjonker.burgerbonanza.entities.purchase.Purchase;
 import com.tmjonker.burgerbonanza.entities.role.Role;
@@ -51,6 +52,7 @@ public class User implements UserDetails {
     )
     private Set<Address> addresses;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "shopping_cart_id", referencedColumnName = "id")
     private ShoppingCart shoppingCart;
