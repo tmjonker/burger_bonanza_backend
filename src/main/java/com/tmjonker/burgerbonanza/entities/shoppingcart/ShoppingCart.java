@@ -36,6 +36,10 @@ public class ShoppingCart {
 
     }
 
+    public void setMenuItems(List<MenuItem> menuItems) {
+        this.menuItems = menuItems;
+    }
+
     public Long getId() {
         return id;
     }

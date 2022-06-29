@@ -30,9 +30,18 @@ public class ShoppingCartService {
 
     public void processShoppingCart(ShoppingCartRequest shoppingCartRequest, String username) {
 
-        ShoppingCart cart = new ShoppingCart(shoppingCartRequest.getNumItems(), shoppingCartRequest.getMenuItems());
         User user = (User) userDetailsService.loadUserByUsername(username);
-        cart = shoppingCartRepository.save(cart);
+        ShoppingCart cart;
+
+        if (user.getShoppingCart() == null) {
+            cart = new ShoppingCart(shoppingCartRequest.getNumItems(), shoppingCartRequest.getMenuItems());
+
+            cart = shoppingCartRepository.save(cart);
+        } else {
+            cart = user.getShoppingCart();
+            cart.setNumItems(shoppingCartRequest.getNumItems());
+            cart.setMenuItems(shoppingCartRequest.getMenuItems());
+        }
         user.setShoppingCart(cart);
 
         userDetailsService.saveUser(user);
