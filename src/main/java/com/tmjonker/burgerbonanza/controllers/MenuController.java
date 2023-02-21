@@ -2,6 +2,8 @@ package com.tmjonker.burgerbonanza.controllers;
 
 import com.tmjonker.burgerbonanza.entities.menu.MenuItem;
 import com.tmjonker.burgerbonanza.services.MenuService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,38 +19,65 @@ public class MenuController {
     }
 
     @GetMapping("/api/menu")
-    public List<MenuItem> getAllMenuItems() {
+    public ResponseEntity<?> getAllMenuItems() {
 
-        return menuService.getAllMenuItems();
+        List<MenuItem> list = menuService.getAllMenuItems();
+        if (list != null)
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/api/menu/name/{name}")
-    public MenuItem getMenuItemByName(@PathVariable String name) {
+    public ResponseEntity<?> getMenuItemByName(@PathVariable String name) {
 
-        return menuService.getMenuItemByName(name);
+        try {
+            MenuItem menuItem = menuService.getMenuItemByName(name);
+            return new ResponseEntity<>(menuItem, HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/api/menu/id/{id}")
-    public MenuItem getMenuItemById(@PathVariable Integer id) {
+    public ResponseEntity<?> getMenuItemById(@PathVariable Integer id) {
 
-        return menuService.getMenuItemById(id);
+        try {
+            MenuItem menuItem = menuService.getMenuItemById(id);
+            return new ResponseEntity<>(menuItem, HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/api/menu/category/{category}")
-    public List<MenuItem> getMenuItemsByCategory(@PathVariable String category) {
+    public ResponseEntity<?> getMenuItemsByCategory(@PathVariable String category) {
 
-        return menuService.getMenuItemsByCategory(category);
+        try {
+            List<MenuItem> list = menuService.getMenuItemsByCategory(category);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping(value = "/api/menu/{id}")
-    public MenuItem addMenuItem(@RequestBody MenuItem menuItem) {
+    public ResponseEntity<?> addMenuItem(@RequestBody MenuItem mi) {
 
-        return menuService.addMenuItem(menuItem);
+        MenuItem menuItem = menuService.addMenuItem(mi);
+
+        if (menuItem != null) {
+            return new ResponseEntity<>(menuItem, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("/menu/{id}")
-    public void deleteMenuItem(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteMenuItem(@PathVariable Integer id) {
 
-        menuService.deleteMenuItem(id);
+        if (menuService.existsById(id)) {
+            menuService.deleteMenuItem(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

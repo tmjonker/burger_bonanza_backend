@@ -2,6 +2,7 @@ package com.tmjonker.burgerbonanza.controllers;
 
 import com.tmjonker.burgerbonanza.entities.purchase.purchaserequest.PurchaseRequest;
 import com.tmjonker.burgerbonanza.services.PurchaseService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,8 +18,8 @@ public class PurchaseController {
     }
 
     @PostMapping("/purchase")
-    public void postPurchase(@RequestBody PurchaseRequest purchaseRequest) {
+    public ResponseEntity<?> postPurchase(@RequestBody PurchaseRequest purchaseRequest) {
 
-        purchaseService.processPurchase(purchaseRequest);
+        return purchaseService.processPurchase(purchaseRequest);
     }
 }

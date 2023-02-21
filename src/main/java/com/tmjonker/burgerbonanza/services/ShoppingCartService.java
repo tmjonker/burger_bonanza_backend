@@ -5,6 +5,8 @@ import com.tmjonker.burgerbonanza.entities.shoppingcart.ShoppingCart;
 import com.tmjonker.burgerbonanza.entities.shoppingcart.shoppingcartrequest.ShoppingCartRequest;
 import com.tmjonker.burgerbonanza.entities.user.User;
 import com.tmjonker.burgerbonanza.repositories.ShoppingCartRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,9 +30,13 @@ public class ShoppingCartService {
         return user.getShoppingCart();
     }
 
-    public void processShoppingCart(ShoppingCartRequest shoppingCartRequest, String username) {
+    public ResponseEntity<?> processShoppingCart(ShoppingCartRequest shoppingCartRequest, String username) {
 
         User user = (User) userDetailsService.loadUserByUsername(username);
+
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
         ShoppingCart cart;
 
         if (user.getShoppingCart() == null) {
@@ -44,6 +50,6 @@ public class ShoppingCartService {
         }
         user.setShoppingCart(cart);
 
-        userDetailsService.saveUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

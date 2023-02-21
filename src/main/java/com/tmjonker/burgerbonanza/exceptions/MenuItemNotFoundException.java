@@ -1,6 +1,6 @@
 package com.tmjonker.burgerbonanza.exceptions;
 
-public class MenuItemNotFoundException extends RuntimeException {
+public class MenuItemNotFoundException extends Exception {
 
     public MenuItemNotFoundException(String name) {
 

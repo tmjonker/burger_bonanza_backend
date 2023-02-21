@@ -24,17 +24,17 @@ public class MenuService {
         return Streamable.of(menuItemRepository.findAll()).toList();
     }
 
-    public MenuItem getMenuItemByName(String name) {
+    public MenuItem getMenuItemByName(String name) throws MenuItemNotFoundException {
 
         return menuItemRepository.findByName(name).orElseThrow(() -> new MenuItemNotFoundException(name));
     }
 
-    public MenuItem getMenuItemById(Integer id) {
+    public MenuItem getMenuItemById(Integer id) throws MenuItemNotFoundException {
 
         return menuItemRepository.findById(id).orElseThrow(() -> new MenuItemNotFoundException(id));
     }
 
-    public List<MenuItem> getMenuItemsByCategory(String category) {
+    public List<MenuItem> getMenuItemsByCategory(String category) throws MenuItemNotFoundException {
 
         return menuItemRepository.findAllByCategory(category).orElseThrow(() -> new MenuItemNotFoundException(category));
     }

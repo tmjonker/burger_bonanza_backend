@@ -30,7 +30,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     public User saveNewUser(Map<String, String> userMap) throws UsernameAlreadyExistsException {
 
-        if (!userRepository.existsByUsername(userMap.get("username"))) {
+        boolean exists = userRepository.existsByUsername(userMap.get("username"));
+        if (!exists) {
             User user = new User(userMap.get("username"), passwordManagementService.encodePassword(userMap.get("password1")));
 
             return userRepository.save(user);

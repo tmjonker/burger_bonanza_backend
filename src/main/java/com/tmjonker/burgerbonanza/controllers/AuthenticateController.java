@@ -7,6 +7,7 @@ import com.tmjonker.burgerbonanza.jwt.JwtTokenUtil;
 import com.tmjonker.burgerbonanza.services.AuthenticationService;
 import com.tmjonker.burgerbonanza.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -37,13 +38,16 @@ public class AuthenticateController {
     @PostMapping(value = "/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
-        authenticationService.authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+        try {
+            authenticationService.authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+            final UserDetails userDetails = userDetailsService
+                    .loadUserByUsername(authenticationRequest.getUsername());
 
-        final UserDetails userDetails = userDetailsService
-                .loadUserByUsername(authenticationRequest.getUsername());
+            final String token = jwtTokenUtil.generateToken(userDetails);
 
-        final String token = jwtTokenUtil.generateToken(userDetails);
-
-        return ResponseEntity.ok(Map.of("token", new JwtResponse(token), "user", (User) userDetails));
+            return ResponseEntity.ok(Map.of("token", new JwtResponse(token), "user", (User) userDetails));
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

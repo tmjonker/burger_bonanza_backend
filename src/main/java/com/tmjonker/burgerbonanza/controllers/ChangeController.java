@@ -5,6 +5,7 @@ import com.tmjonker.burgerbonanza.services.AuthenticationService;
 import com.tmjonker.burgerbonanza.services.PasswordManagementService;
 import com.tmjonker.burgerbonanza.entities.user.User;
 import com.tmjonker.burgerbonanza.repositories.UserRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +25,7 @@ public class ChangeController {
     }
 
     @PostMapping("/change")
-    public User postChange(@RequestBody ChangePasswordRequest cpr) throws Exception {
+    public ResponseEntity<?> postChange(@RequestBody ChangePasswordRequest cpr) throws Exception {
 
         String username = cpr.getUsername();
         String newPassword = cpr.getNewPassword();

@@ -3,6 +3,8 @@ package com.tmjonker.burgerbonanza.services;
 import com.tmjonker.burgerbonanza.exceptions.UserNotFoundException;
 import com.tmjonker.burgerbonanza.entities.user.User;
 import com.tmjonker.burgerbonanza.repositories.UserRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +20,15 @@ public class PasswordManagementService {
         this.userRepository = userRepository;
     }
 
-    public User changePassword(String username, String newPassword) {
+    public ResponseEntity<?> changePassword(String username, String newPassword) {
 
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
+        User user = userRepository.findByUsername(username).orElse(null);
+
+        if (user == null)
+            return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+
         user.setPassword(passwordEncoder.encode(newPassword));
-        return userRepository.save(user);
+        return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
     }
 
     public boolean validatePassword(String username, String oldPassword) {

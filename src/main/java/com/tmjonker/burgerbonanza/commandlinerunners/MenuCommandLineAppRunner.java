@@ -26,7 +26,7 @@ public class MenuCommandLineAppRunner implements CommandLineRunner {
         MenuItem menuItem1 = new MenuItem(10, "Appetizer", "Boneless Wings", "Boneless Wings with your choice of Ranch" +
                 "or Bleu Cheese.", 8.99, "https://dinnerthendessert.com/wp-content/uploads/2018/08/Boneless-Buffalo-Wings-3.jpg");
         MenuItem menuItem2 = new MenuItem(11, "Appetizer", "Fried Pickles", "Delicious fried pickles.  Served with ranch " +
-                "or blue cheese.", 6.99, "https://www.simplylowcal.com/wp-content/uploads/2022/01/air-fryer-fried-pickles.jpg");
+                "or blue cheese.", 6.99, "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/5/4/0/FNM_060112-Almost-Famous-Fried-Pickles-Recipe_s4x3.jpg.rend.hgtvcom.616.462.suffix/1382541365213.jpeg");
         MenuItem menuItem3 = new MenuItem(12, "Appetizer", "Mozzarella Sticks", "Fried mozzarella sticks served with a side " +
                 "of marinara sauce.", 7.99, "https://lilluna.com/wp-content/uploads/2017/12/mozz-sticks-resize-6-500x500.jpg");
         MenuItem menuItem4 = new MenuItem(13, "Appetizer", "Onion Ring Tower", "Delicious tower of Onion Rings",
