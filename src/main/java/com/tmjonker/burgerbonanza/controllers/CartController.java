@@ -29,8 +29,9 @@ public class CartController {
 
         ShoppingCart shoppingCart = shoppingCartService.getShoppingCart(username);
 
-        if (shoppingCart != null)
+        if (shoppingCart != null) {
             return new ResponseEntity<>(shoppingCart, HttpStatus.OK);
+        }
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,24 +33,37 @@ public class ShoppingCartService {
 
     public ResponseEntity<?> processShoppingCart(ShoppingCartRequest shoppingCartRequest, String username) {
 
-        User user = (User) userDetailsService.loadUserByUsername(username);
+        try {
+            User user = (User) userDetailsService.loadUserByUsername(username);
 
-        if (user == null)
+            ShoppingCart cart;
+
+            if (user.getShoppingCart() == null) {
+                cart = new ShoppingCart(shoppingCartRequest.getNumItems(), shoppingCartRequest.getMenuItems());
+
+                cart = shoppingCartRepository.save(cart);
+            } else {
+                cart = user.getShoppingCart();
+                cart.setNumItems(shoppingCartRequest.getNumItems());
+                cart.setMenuItems(shoppingCartRequest.getMenuItems());
+            }
+            user.setShoppingCart(cart);
+            userDetailsService.saveUser(user);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public void createShoppingCart(User user) {
 
         ShoppingCart cart;
-
-        if (user.getShoppingCart() == null) {
-            cart = new ShoppingCart(shoppingCartRequest.getNumItems(), shoppingCartRequest.getMenuItems());
-
-            cart = shoppingCartRepository.save(cart);
-        } else {
-            cart = user.getShoppingCart();
-            cart.setNumItems(shoppingCartRequest.getNumItems());
-            cart.setMenuItems(shoppingCartRequest.getMenuItems());
-        }
+        cart = new ShoppingCart(0, new ArrayList<MenuItem>());
+        shoppingCartRepository.save(cart);
         user.setShoppingCart(cart);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        userDetailsService.saveUser(user);
+
     }
 }
