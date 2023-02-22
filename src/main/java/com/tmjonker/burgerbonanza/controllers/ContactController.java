@@ -31,6 +31,7 @@ public class ContactController {
             emailManagementService.sendEmail(from, subject, body);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch(Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

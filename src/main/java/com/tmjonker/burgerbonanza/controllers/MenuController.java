@@ -24,7 +24,7 @@ public class MenuController {
         List<MenuItem> list = menuService.getAllMenuItems();
         if (list != null)
             return new ResponseEntity<>(list, HttpStatus.OK);
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/api/menu/name/{name}")
@@ -34,7 +34,7 @@ public class MenuController {
             MenuItem menuItem = menuService.getMenuItemByName(name);
             return new ResponseEntity<>(menuItem, HttpStatus.OK);
         }catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -45,7 +45,7 @@ public class MenuController {
             MenuItem menuItem = menuService.getMenuItemById(id);
             return new ResponseEntity<>(menuItem, HttpStatus.OK);
         }catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -56,7 +56,7 @@ public class MenuController {
             List<MenuItem> list = menuService.getMenuItemsByCategory(category);
             return new ResponseEntity<>(list, HttpStatus.OK);
         }catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -78,6 +78,6 @@ public class MenuController {
             menuService.deleteMenuItem(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } else
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
