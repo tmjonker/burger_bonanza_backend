@@ -1,6 +1,6 @@
 package com.tmjonker.burgerbonanza.controllers;
 
-import com.tmjonker.burgerbonanza.entities.purchase.purchaserequest.PurchaseRequest;
+import com.tmjonker.burgerbonanza.dtos.PurchaseDTO;
 import com.tmjonker.burgerbonanza.services.PurchaseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +18,8 @@ public class PurchaseController {
     }
 
     @PostMapping("/purchase")
-    public ResponseEntity<?> postPurchase(@RequestBody PurchaseRequest purchaseRequest) {
+    public ResponseEntity<?> postPurchase(@RequestBody PurchaseDTO purchaseDTO) {
 
-        return purchaseService.processPurchase(purchaseRequest);
+        return purchaseService.processPurchase(purchaseDTO);
     }
 }

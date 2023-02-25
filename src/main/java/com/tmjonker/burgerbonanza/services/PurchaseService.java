@@ -1,7 +1,7 @@
 package com.tmjonker.burgerbonanza.services;
 
+import com.tmjonker.burgerbonanza.dtos.PurchaseDTO;
 import com.tmjonker.burgerbonanza.entities.purchase.Purchase;
-import com.tmjonker.burgerbonanza.entities.purchase.purchaserequest.PurchaseRequest;
 import com.tmjonker.burgerbonanza.entities.user.User;
 import com.tmjonker.burgerbonanza.repositories.AddressRepository;
 import com.tmjonker.burgerbonanza.repositories.PurchaseRepository;
@@ -24,16 +24,16 @@ public class PurchaseService {
         this.addressRepository = addressRepository;
     }
 
-    public ResponseEntity<?> processPurchase(PurchaseRequest purchaseRequest) {
+    public ResponseEntity<?> processPurchase(PurchaseDTO purchaseDTO) {
 
-        Purchase purchase = new Purchase(purchaseRequest.getMenuItems(), purchaseRequest.getTotalPrice());
+        Purchase purchase = new Purchase(purchaseDTO.getMenuItems(), purchaseDTO.getTotalPrice());
 
         try {
-            User user = (User) userDetailsService.loadUserByUsername(purchaseRequest.getUsername());
+            User user = (User) userDetailsService.loadUserByUsername(purchaseDTO.getUsername());
             user.addPurchase(purchase);
-            user.addAddress(purchaseRequest.getAddress());
+            user.addAddress(purchaseDTO.getAddress());
 
-            addressRepository.save(purchaseRequest.getAddress());
+            addressRepository.save(purchaseDTO.getAddress());
             purchaseRepository.save(purchase);
             userDetailsService.saveUser(user);
 

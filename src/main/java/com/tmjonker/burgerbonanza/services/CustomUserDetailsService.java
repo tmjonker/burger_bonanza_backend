@@ -1,8 +1,10 @@
 package com.tmjonker.burgerbonanza.services;
 
+import com.tmjonker.burgerbonanza.dtos.UserDTO;
 import com.tmjonker.burgerbonanza.entities.user.User;
 import com.tmjonker.burgerbonanza.exceptions.UsernameAlreadyExistsException;
 import com.tmjonker.burgerbonanza.repositories.UserRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,7 +18,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
     private PasswordManagementService passwordManagementService;
 
-    public CustomUserDetailsService(UserRepository userRepository, PasswordManagementService passwordManagementService) {
+    public CustomUserDetailsService(UserRepository userRepository, @Lazy PasswordManagementService passwordManagementService) {
 
         this.userRepository = userRepository;
         this.passwordManagementService = passwordManagementService;
@@ -28,15 +30,14 @@ public class CustomUserDetailsService implements UserDetailsService {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("username"));
     }
 
-    public User saveNewUser(Map<String, String> userMap) throws UsernameAlreadyExistsException {
+    public User saveNewUser(UserDTO userDTO) throws UsernameAlreadyExistsException {
 
-        boolean exists = userRepository.existsByUsername(userMap.get("username"));
+        boolean exists = userRepository.existsByUsername(userDTO.getUsername());
         if (!exists) {
-            User user = new User(userMap.get("username"), passwordManagementService.encodePassword(userMap.get("password1")));
-
+            User user = new User(userDTO.getUsername(), passwordManagementService.encodePassword(userDTO.getPassword1()));
             return userRepository.save(user);
         } else {
-            throw new UsernameAlreadyExistsException(userMap.get("username"));
+            throw new UsernameAlreadyExistsException(userDTO.getUsername());
         }
     }
 

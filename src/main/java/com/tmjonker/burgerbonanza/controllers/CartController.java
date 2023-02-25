@@ -1,8 +1,7 @@
 package com.tmjonker.burgerbonanza.controllers;
 
+import com.tmjonker.burgerbonanza.dtos.CartDTO;
 import com.tmjonker.burgerbonanza.entities.shoppingcart.ShoppingCart;
-import com.tmjonker.burgerbonanza.entities.shoppingcart.shoppingcartrequest.ShoppingCartRequest;
-import com.tmjonker.burgerbonanza.entities.user.User;
 import com.tmjonker.burgerbonanza.services.ShoppingCartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +18,9 @@ public class CartController {
     }
 
     @PostMapping("/cart/{username}")
-    public ResponseEntity<?> postCart(@RequestBody ShoppingCartRequest shoppingCartRequest, @PathVariable String username) {
+    public ResponseEntity<?> postCart(@RequestBody CartDTO cartDTO, @PathVariable String username) {
 
-        return shoppingCartService.processShoppingCart(shoppingCartRequest, username);
+        return shoppingCartService.processShoppingCart(cartDTO, username);
     }
 
     @GetMapping("/cart/{username}")

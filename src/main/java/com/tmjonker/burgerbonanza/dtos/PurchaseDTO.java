@@ -1,11 +1,11 @@
-package com.tmjonker.burgerbonanza.entities.purchase.purchaserequest;
+package com.tmjonker.burgerbonanza.dtos;
 
 import com.tmjonker.burgerbonanza.entities.address.Address;
 import com.tmjonker.burgerbonanza.entities.menu.MenuItem;
 
 import java.util.List;
 
-public class PurchaseRequest {
+public class PurchaseDTO {
 
     private List<MenuItem> menuItems;
     private double totalPrice;
@@ -13,7 +13,7 @@ public class PurchaseRequest {
 
     private Address address;
 
-    public PurchaseRequest(List<MenuItem> menuItems, double totalPrice, String username, Address address) {
+    public PurchaseDTO(List<MenuItem> menuItems, double totalPrice, String username, Address address) {
         this.menuItems = menuItems;
         this.totalPrice = totalPrice;
         this.username = username;

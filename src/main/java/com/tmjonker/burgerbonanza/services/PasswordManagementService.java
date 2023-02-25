@@ -11,29 +11,29 @@ import org.springframework.stereotype.Service;
 @Service
 public class PasswordManagementService {
 
-    PasswordEncoder passwordEncoder;
-    UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
+    private CustomUserDetailsService customUserDetailsService;
 
-    public PasswordManagementService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    public PasswordManagementService(PasswordEncoder passwordEncoder, CustomUserDetailsService customUserDetailsService) {
 
         this.passwordEncoder = passwordEncoder;
-        this.userRepository = userRepository;
+        this.customUserDetailsService = customUserDetailsService;
     }
 
     public ResponseEntity<?> changePassword(String username, String newPassword) {
 
-        User user = userRepository.findByUsername(username).orElse(null);
+        User user = (User) customUserDetailsService.loadUserByUsername(username);
 
         if (user == null)
             return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 
         user.setPassword(passwordEncoder.encode(newPassword));
-        return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     public boolean validatePassword(String username, String oldPassword) {
 
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
+        User user = (User) customUserDetailsService.loadUserByUsername(username);
 
         return passwordEncoder.matches(oldPassword, user.getPassword());
     }

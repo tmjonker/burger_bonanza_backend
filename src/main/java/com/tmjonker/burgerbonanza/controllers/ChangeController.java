@@ -1,10 +1,10 @@
 package com.tmjonker.burgerbonanza.controllers;
 
-import com.tmjonker.burgerbonanza.entities.user.ChangePasswordRequest.ChangePasswordRequest;
+import com.tmjonker.burgerbonanza.dtos.ChangePasswordDTO;
 import com.tmjonker.burgerbonanza.services.AuthenticationService;
 import com.tmjonker.burgerbonanza.services.PasswordManagementService;
-import com.tmjonker.burgerbonanza.entities.user.User;
 import com.tmjonker.burgerbonanza.repositories.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,28 +12,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ChangeController {
+    private PasswordManagementService passwordManagementService;
+    private AuthenticationService authenticationService;
 
-    UserRepository userRepository;
-    PasswordManagementService passwordManagementService;
-    AuthenticationService authenticationService;
-
-    public ChangeController(UserRepository userRepository, PasswordManagementService passwordManagementService,
+    public ChangeController(PasswordManagementService passwordManagementService,
                             AuthenticationService authenticationService) {
-        this.userRepository = userRepository;
         this.passwordManagementService = passwordManagementService;
         this.authenticationService = authenticationService;
     }
 
     @PostMapping("/change")
-    public ResponseEntity<?> postChange(@RequestBody ChangePasswordRequest cpr) throws Exception {
+    public ResponseEntity<?> postChange(@RequestBody ChangePasswordDTO changePasswordDTO) throws Exception {
 
-        String username = cpr.getUsername();
-        String newPassword = cpr.getNewPassword();
-        String oldPassword = cpr.getOldPassword();
+        String username = changePasswordDTO.getUsername();
+        String newPassword = changePasswordDTO.getNewPassword();
+        String oldPassword = changePasswordDTO.getOldPassword();
 
-        authenticationService.authenticate(username, oldPassword);
+        try {
+            authenticationService.authenticate(username, oldPassword);
 
-        return passwordManagementService.changePassword(username, newPassword);
+            return passwordManagementService.changePassword(username, newPassword);
+        } catch (Exception e) {
+
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
     }
 }

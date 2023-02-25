@@ -1,8 +1,8 @@
-package com.tmjonker.burgerbonanza.entities.user.ChangePasswordRequest;
+package com.tmjonker.burgerbonanza.dtos;
 
 import java.io.Serializable;
 
-public class ChangePasswordRequest implements Serializable {
+public class ChangePasswordDTO implements Serializable {
 
     private static final long serialVersionUID = 5926468583005150707L;
 
@@ -10,11 +10,11 @@ public class ChangePasswordRequest implements Serializable {
     private String oldPassword;
     private String newPassword;
 
-    public ChangePasswordRequest() {
+    public ChangePasswordDTO() {
 
     }
 
-    public ChangePasswordRequest(String username, String oldPassword, String newPassword) {
+    public ChangePasswordDTO(String username, String oldPassword, String newPassword) {
         this.username = username;
         this.oldPassword = oldPassword;
         this.newPassword = newPassword;
@@ -44,3 +44,4 @@ public class ChangePasswordRequest implements Serializable {
         this.newPassword = newPassword;
     }
 }
+

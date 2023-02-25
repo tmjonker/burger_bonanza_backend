@@ -1,16 +1,16 @@
-package com.tmjonker.burgerbonanza.entities.shoppingcart.shoppingcartrequest;
+package com.tmjonker.burgerbonanza.dtos;
 
 import com.tmjonker.burgerbonanza.entities.menu.MenuItem;
 
 import java.util.List;
 
-public class ShoppingCartRequest {
+public class CartDTO {
 
     private int numItems;
 
     private List<MenuItem> menuItems;
 
-    public ShoppingCartRequest(int numItems, List<MenuItem> menuItems) {
+    public CartDTO(int numItems, List<MenuItem> menuItems) {
         this.numItems = numItems;
         this.menuItems = menuItems;
     }
