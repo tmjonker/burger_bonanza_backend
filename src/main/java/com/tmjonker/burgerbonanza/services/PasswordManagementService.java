@@ -28,6 +28,7 @@ public class PasswordManagementService {
             return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 
         user.setPassword(passwordEncoder.encode(newPassword));
+        customUserDetailsService.saveUser(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
