@@ -1,54 +1,37 @@
-package com.tmjonker.burgerbonanza.entities.address;
+package com.tmjonker.burgerbonanza.dtos;
 
-import com.tmjonker.burgerbonanza.entities.user.User;
-
-import javax.persistence.*;
-
-@Entity
-public class Address {
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class AddressDTO {
 
     private String name;
-    private String address;
-
+    private String address1;
     private String address2;
-
     private String city;
-
     private String state;
-
     private String zipCode;
 
-    public Address(String name, String address, String address2, String city, String state, String zipCode) {
+    public AddressDTO(String name, String address1, String address2, String city, String state, String zipCode) {
         this.name = name;
-        this.address = address;
+        this.address1 = address1;
         this.address2 = address2;
         this.city = city;
         this.state = state;
         this.zipCode = zipCode;
     }
 
-    public Address() {
-
+    public String getName() {
+        return name;
     }
 
-    public Long getId() {
-        return id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getAddress1() {
+        return address1;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddress1(String address1) {
+        this.address1 = address1;
     }
 
     public String getAddress2() {
@@ -81,13 +64,5 @@ public class Address {
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

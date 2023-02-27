@@ -1,6 +1,7 @@
 package com.tmjonker.burgerbonanza.services;
 
 import com.tmjonker.burgerbonanza.dtos.PurchaseDTO;
+import com.tmjonker.burgerbonanza.entities.address.Address;
 import com.tmjonker.burgerbonanza.entities.purchase.Purchase;
 import com.tmjonker.burgerbonanza.entities.user.User;
 import com.tmjonker.burgerbonanza.repositories.AddressRepository;
@@ -14,31 +15,35 @@ public class PurchaseService {
 
     PurchaseRepository purchaseRepository;
     CustomUserDetailsService userDetailsService;
-    AddressRepository addressRepository;
+    AddressService addressService;
 
     public PurchaseService(PurchaseRepository purchaseRepository, CustomUserDetailsService userDetailsService,
-                           AddressRepository addressRepository) {
+                           AddressService addressService) {
 
         this.purchaseRepository = purchaseRepository;
         this.userDetailsService = userDetailsService;
-        this.addressRepository = addressRepository;
+        this.addressService = addressService;
     }
 
     public ResponseEntity<?> processPurchase(PurchaseDTO purchaseDTO) {
 
         Purchase purchase = new Purchase(purchaseDTO.getMenuItems(), purchaseDTO.getTotalPrice());
+        Address address = new Address(purchaseDTO.getAddress().getName(),purchaseDTO.getAddress().getAddress1(),
+                purchaseDTO.getAddress().getAddress2(),purchaseDTO.getAddress().getCity(),
+                purchaseDTO.getAddress().getState(), purchaseDTO.getAddress().getZipCode());
 
         try {
+            address = addressService.saveAddress(address);
+            purchase = purchaseRepository.save(purchase);
             User user = (User) userDetailsService.loadUserByUsername(purchaseDTO.getUsername());
             user.addPurchase(purchase);
-            user.addAddress(purchaseDTO.getAddress());
+            user.addAddress(address);
 
-            addressRepository.save(purchaseDTO.getAddress());
-            purchaseRepository.save(purchase);
             userDetailsService.saveUser(user);
 
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

@@ -27,6 +27,10 @@ public class Purchase {
         this.totalPrice = totalPrice;
     }
 
+    public Purchase() {
+
+    }
+
     public Long getId() {
         return id;
     }

@@ -11,9 +11,9 @@ public class PurchaseDTO {
     private double totalPrice;
     private String username;
 
-    private Address address;
+    private AddressDTO address;
 
-    public PurchaseDTO(List<MenuItem> menuItems, double totalPrice, String username, Address address) {
+    public PurchaseDTO(List<MenuItem> menuItems, double totalPrice, String username, AddressDTO address) {
         this.menuItems = menuItems;
         this.totalPrice = totalPrice;
         this.username = username;
@@ -24,11 +24,11 @@ public class PurchaseDTO {
         return menuItems;
     }
 
-    public Address getAddress() {
+    public AddressDTO getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(AddressDTO address) {
         this.address = address;
     }
 
