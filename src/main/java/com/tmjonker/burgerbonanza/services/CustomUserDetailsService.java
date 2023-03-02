@@ -1,6 +1,7 @@
 package com.tmjonker.burgerbonanza.services;
 
 import com.tmjonker.burgerbonanza.dtos.UserDTO;
+import com.tmjonker.burgerbonanza.entities.address.Address;
 import com.tmjonker.burgerbonanza.entities.user.User;
 import com.tmjonker.burgerbonanza.exceptions.UsernameAlreadyExistsException;
 import com.tmjonker.burgerbonanza.repositories.UserRepository;
@@ -10,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
+import java.util.Set;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -44,5 +45,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     public User saveUser(User user) {
 
         return userRepository.save(user);
+    }
+
+    public Set<Address> getUserAddresses(String username) {
+
+        User user = (User) loadUserByUsername(username);
+        return user.getAddresses();
     }
 }
